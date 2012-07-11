@@ -20,6 +20,10 @@ def historic(n):
                 return primes
         i += 1
 
+# if we only need generator primes in a given range, the in-place
+# operations are far more efficient than comparing-and-adding
+# recursively. e.g. generate primes under 1000000:
+# "historic" needs more than 1m, "gen_prime" only needs 1s.
 def gen_prime(n):
     candidates = range(n+1)
     fin = int(n**0.5)
