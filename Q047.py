@@ -1,4 +1,4 @@
-from Q047_factor import prime_factors
+from factor import prime_factors
 
 def main():
     num = 647

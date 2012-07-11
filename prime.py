@@ -1,3 +1,5 @@
+# This script compares three means to generate the first x primes,
+# in which "historic" is fastest and "regexp" is slowest.
 from sys import argv
 from time import time
 
@@ -16,6 +18,16 @@ def historic(n):
             p += 1
             if p == n:
                 return primes
+        i += 1
+
+def gen_prime(upper):
+    """Generate primes within given bounds"""
+    primes = set([2])
+    i = 2
+    while True:
+        if i > upper:
+            return primes
+        prime(i, primes)
         i += 1
 
 def naive(n):
