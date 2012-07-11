@@ -1,22 +1,5 @@
 import sys
-
-def prime(i, primes):
-    for prime in primes:
-        if not (i == prime or i % prime):
-            return False
-    primes.add(i)
-    sys.stdout.write("Find %d\r" % (i))
-    sys.stdout.flush()
-    return True
-
-def historic(n, primes):
-    """Find primes below certain upper bound 'n'."""
-    i = max(primes)
-    while True:
-        if prime(i, primes):
-            if i >= n:
-                return primes
-        i += 1
+from prime import gen_prime
 
 # This function is from stackoverflow http://bit.ly/RoBoF.
 # The better choice is to use itertools.permutations().
@@ -48,7 +31,7 @@ def main():
     # initial set of prime
     primes = set([2])
     ub = 1000000
-    primes = historic(ub, primes)
+    primes = gen_prime(ub)
     print "The length of the primes is ", len(primes)
 
     result = []

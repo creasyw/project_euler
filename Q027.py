@@ -1,27 +1,12 @@
 import sys
-
-def prime(i, primes):
-    for prime in primes:
-        if not (i == prime or i % prime):
-            return False
-    primes.add(i)
-    return True
-
-def historic(n, primes):
-    i = max(primes)
-    while True:
-        if prime(i, primes):
-            if i >= n:
-                return primes
-        i += 1
+from prime import gen_prime
 
 def cal_formula(a, b):
     return lambda n: n**2+a*n+b
 
 # initial set of prime
-primes = set([2])
-ub = 7919
-primes = historic(ub, primes)
+ub = 10000
+primes = set(gen_prime(ub))
 
 # initial state for the searching
 ar, br = 1, 41
@@ -33,9 +18,6 @@ for a in range(-999, 1000):
         n = 0
         while True:
             result = formula(n)
-            if result>ub:
-                primes = historic(result, primes)
-                ub = max(primes)
             if not result in primes:
                 break
             else:

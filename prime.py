@@ -20,15 +20,14 @@ def historic(n):
                 return primes
         i += 1
 
-def gen_prime(upper):
-    """Generate primes within given bounds"""
-    primes = set([2])
-    i = 2
-    while True:
-        if i > upper:
-            return primes
-        prime(i, primes)
-        i += 1
+def gen_prime(n):
+    candidates = range(n+1)
+    fin = int(n**0.5)
+    for i in xrange(2,fin+1):
+        if not candidates[i]:
+            continue
+        candidates[2*i::i] = [None]*(n//i-1)
+    return [i for i in candidates[2:] if i]
 
 def naive(n):
     from itertools import count, islice
