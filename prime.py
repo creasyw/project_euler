@@ -3,6 +3,26 @@
 from sys import argv
 from time import time
 
+# if we only need generator primes in a given range, the in-place
+# operations are far more efficient than comparing-and-adding
+# recursively. e.g. generate primes under 1000000:
+# "historic" needs more than 1m, "gen_prime" only needs 1s.
+def gen_prime(n):
+    candidates = range(n+1)
+    fin = int(n**0.5)
+    for i in xrange(2,fin+1):
+        if not candidates[i]:
+            continue
+        candidates[2*i::i] = [None]*(n//i-1)
+    return [i for i in candidates[2:] if i]
+
+def is_prime(num):
+    base = int(num**0.5)+1
+    for i in range(2,base):
+        if num%i == 0:
+            return False
+    return True
+
 def prime(i, primes):
     for prime in primes:
         if not (i == prime or i % prime):
@@ -19,19 +39,6 @@ def historic(n):
             if p == n:
                 return primes
         i += 1
-
-# if we only need generator primes in a given range, the in-place
-# operations are far more efficient than comparing-and-adding
-# recursively. e.g. generate primes under 1000000:
-# "historic" needs more than 1m, "gen_prime" only needs 1s.
-def gen_prime(n):
-    candidates = range(n+1)
-    fin = int(n**0.5)
-    for i in xrange(2,fin+1):
-        if not candidates[i]:
-            continue
-        candidates[2*i::i] = [None]*(n//i-1)
-    return [i for i in candidates[2:] if i]
 
 def naive(n):
     from itertools import count, islice
