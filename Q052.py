@@ -9,10 +9,21 @@ def is_suitable(num):
             return False
     return True
 
+def ordered_digits(num):
+    return sorted(str(num))
+
+def is_suitable_2(num):
+    digits = ordered_digits(num)
+    for time in range(2,7):
+        if digits != ordered_digits(num*time):
+            return False
+    return True
+
 def main():
     num = 10
     while True:
-        if is_suitable(num):
+        #if is_suitable(num):
+        if is_suitable_2(num):
             break
         num +=1
     print num
