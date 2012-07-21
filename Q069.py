@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import math
 from operator import mul
 from factor import factorize
 
