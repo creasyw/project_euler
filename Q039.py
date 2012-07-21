@@ -1,7 +1,6 @@
 # For right angle triangle, the relationship between perimeter p and two
 # right sides x, y is y = (p^2-2*x*p)/(2*(p-x))
 from math import sqrt
-import sys
 
 def is_integer(p, x):
     y = (pow(p,2)-2*x*p)/(2*(p-x))
@@ -25,11 +24,19 @@ def main():
         if count >cmax:
             cmax = count
             result = p
-            sys.stdout.write("Current max num is %d for %d\r"%(cmax,p))
-            sys.stdout.flush()
 
-    print "\n", result
-    print cmax
+    print result
+
+from Q075 import pythagorean
+
+def solution_2():
+    solutions = pythagorean(1000)
+    num =  max(len(k) for k in solutions.values())
+    for m, n in sorted(solutions.items()):
+        if len(n) == num:
+            print m
+            break
 
 if __name__=="__main__":
-    main()
+    # main()
+    solution_2()

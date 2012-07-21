@@ -6,7 +6,7 @@ from collections import defaultdict
 from fractions import gcd
 from math import sqrt
 
-def unique_pythagorean(perimeter):
+def pythagorean(perimeter):
     limit = int(sqrt(perimeter/2))+1
     result = defaultdict(list)
     for m in range(2, limit):
@@ -22,7 +22,7 @@ def unique_pythagorean(perimeter):
     return result
 
 def main():
-    solutions = unique_pythagorean(1500000)
+    solutions = pythagorean(1500000)
     print sum(1 for k in solutions.values() if len(k)==1)
 
 if __name__ == "__main__":
