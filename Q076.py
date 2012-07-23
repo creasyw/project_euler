@@ -14,5 +14,13 @@ def solve_plus(target, nums):
 def main():
     print solve_plus(100, range(1,100))
 
+def solution_2():
+    from Q078 import pentagonal, partition
+    generalized_pentagonals = sorted(map(pentagonal, range(-100,100)))[1:]
+    partitions = {}
+    # Need subtract 1 for n = n+0
+    print partition(100, partitions, generalized_pentagonals)-1
+
 if __name__ == "__main__":
-    main()
+    #main()
+    solution_2()
