@@ -10,7 +10,7 @@ def pentagonal(n):
     """
     return n*(3*n-1)/2
 
-def partition(n):
+def partition(n, partitions, gp):
     """
     Calculate the next partition number in the list
     http://en.wikipedia.org/wiki/Partition_%28number_theory%29
@@ -18,15 +18,15 @@ def partition(n):
     if n<=1: return 1
     if n not in partitions:
         signs = cycle([1,1,-1,-1])
-        pentagonals = takewhile( lambda p: p<=n, generalized_pentagonals)
-        partitions[n] = sum(sign * partition(n-p) for sign, p in izip(signs, pentagonals))
+        pentagonals = takewhile( lambda p: p<=n, gp)
+        partitions[n] = sum(sign * partition(n-p, partitions, gp) for sign, p in izip(signs, pentagonals))
     return partitions[n]
 
-generalized_pentagonals = sorted(map(pentagonal, range(-250,250)))[1:]
-partitions = {}
 
 def main():
-    print (n for n in count(0) if partition(n) % 1000000 == 0).next()
+    generalized_pentagonals = sorted(map(pentagonal, range(-250,250)))[1:]
+    partitions = {}
+    print (n for n in count(0) if partition(n, partitions, generalized_pentagonals) % 1000000 == 0).next()
 
 if __name__ == "__main__":
     main()
