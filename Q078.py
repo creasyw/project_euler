@@ -2,38 +2,31 @@
 # since the explosion of number of combinations.In theory, this is about "partition" 
 # in number theory: p(n) = p(n-1)+p(n-2)-p(n-5)-p(n-7)+p(n-12)+p(n-15)-p(n-22)-...,
 # where p(0)=1 and p(k)=0 (k<0). the variable is generalized pentagonal numbers.
+from itertools import cycle, takewhile, izip, count
 
-
-def generalized_pentagnal(n):
+def pentagonal(n):
     """
     Generalized pentagonal numbers (http://en.wikipedia.org/wiki/Pentagonal_number)
     """
-    return (3*((-1)**(n+1)*((n+1)//2))**2-(-1)**(n+1)*((n+1)//2))/2
+    return n*(3*n-1)/2
 
-def partition(plist):
+def partition(n):
     """
     Calculate the next partition number in the list
     http://en.wikipedia.org/wiki/Partition_%28number_theory%29
     """
-    length = len(plist)
-    count = 0
-    index = generalized_pentagnal(count+1)
-    new = 0
-    while index <= length:
-        new += (-1)**(count//2)*plist[-index]
-        count += 1
-        index = generalized_pentagnal(count+1)
-    return plist+[new]
+    if n<=1: return 1
+    if n not in partitions:
+        signs = cycle([1,1,-1,-1])
+        pentagonals = takewhile( lambda p: p<=n, generalized_pentagonals)
+        partitions[n] = sum(sign * partition(n-p) for sign, p in izip(signs, pentagonals))
+    return partitions[n]
+
+generalized_pentagonals = sorted(map(pentagonal, range(-250,250)))[1:]
+partitions = {}
 
 def main():
-    divisor = 10**6
-    n = 10
-    plist = [1,1,2]
-    while True:
-        plist = partition(plist)
-        if plist[-1] % divisor == 0:
-            break
-    print len(plist)-1
+    print (n for n in count(0) if partition(n) % 1000000 == 0).next()
 
 if __name__ == "__main__":
     main()
