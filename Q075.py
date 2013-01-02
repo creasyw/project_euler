@@ -7,6 +7,7 @@ from fractions import gcd
 from math import sqrt
 
 def pythagorean(perimeter):
+    """return all of the candidates whose perimeter is less than the input value"""
     limit = int(sqrt(perimeter/2))+1
     result = defaultdict(list)
     for m in range(2, limit):
@@ -16,8 +17,9 @@ def pythagorean(perimeter):
                 b = 2*m*n
                 c = m**2+n**2
                 p = a+b+c
+                s = p
                 while p <= perimeter:
-                    result[p].append((a,b,c))
+                    result[p].append((p*a/s,p*b/s,p*c/s))
                     p += a+b+c
     return result
 
