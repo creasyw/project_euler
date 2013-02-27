@@ -241,7 +241,7 @@ int question5()
 
 
 int main(){
-	printf("result = %d.\n", question5());
+	printf("result = %d.\n", question2());
 	return 0;
 }
 
