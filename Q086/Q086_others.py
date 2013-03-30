@@ -1,5 +1,5 @@
 from math import sqrt
-L = 112
+L = 1000000
 c = 0
 a = 2
 while c < L:
