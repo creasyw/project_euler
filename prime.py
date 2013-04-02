@@ -71,5 +71,5 @@ def dotime(func, n):
 if __name__ == "__main__":
 #    for func in naive, historic, regexp:
 #        dotime(func, int(argv[1]))
-    p = gen_prime(1000)
+    p = gen_prime(1000000)
     print "There are %s primes under %s."%(len(p), 1000)
