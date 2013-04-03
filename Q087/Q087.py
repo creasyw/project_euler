@@ -18,7 +18,7 @@ def main():
                 sum2 = sum+k**4
                 if sum2 < limit:
                     result.add(sum2)
-    print "Q086 = ", len(result)
+    print "Q087 = ", len(result)
 
 
 if __name__=="__main__":
