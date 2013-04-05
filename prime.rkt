@@ -1,4 +1,6 @@
 #lang racket
+(provide gen-prime)
+
 
 (define (looping base lst)
   (define (helper count new_lst)
