@@ -1,4 +1,5 @@
 def factorize(n):
+    """ Provide factorization in a list """
     import math
     res = []
     # iterate over all even numbers first.
@@ -53,6 +54,7 @@ def prime_factors(n):
             n = pull_off_factors(n, c+p, output_list)
 
 def factors(n):
+    """ Provide all factors in a list """
     factors = prime_factors(n)
 
     all = [1]
