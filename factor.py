@@ -53,16 +53,20 @@ def prime_factors(n):
         for p in other_primes:
             n = pull_off_factors(n, c+p, output_list)
 
-def factors(n):
-    """ Provide all factors in a list """
-    factors = prime_factors(n)
+#def factors(n):
+#    """ Provide all factors in a list """
+#    factors = prime_factors(n)
+#
+#    all = [1]
+#    for p,e in factors:
+#        prev = all[:]
+#        pn = 1
+#        for i in range(e):
+#            pn *= p
+#            all.extend([a*pn for a in prev])        
+#    all.sort()
+#    return all
 
-    all = [1]
-    for p,e in factors:
-        prev = all[:]
-        pn = 1
-        for i in range(e):
-            pn *= p
-            all.extend([a*pn for a in prev])        
-    all.sort()
-    return all
+# a much concise version
+def factors(n):
+    return filter(lambda i: n % i == 0, range(1, n + 1))
