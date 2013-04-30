@@ -7,3 +7,10 @@
    '((separator-chars            #\|)
      (strip-leading-whitespace?  . #t)
      (strip-trailing-whitespace? . #t))))
+
+(define (concatenate-number st)
+  (define (helper acc)
+    (if (null? (st)) acc
+        (helper (string-append acc (car (st))))))
+  (helper ""))
+
