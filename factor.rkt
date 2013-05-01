@@ -1,6 +1,7 @@
 #lang racket
 
 (provide factorization)
+(provide prime-factors)
 (provide factors)
 
 (define (factorization num)
