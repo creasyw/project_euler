@@ -16,5 +16,13 @@
            (left (/ num (foldl * 1 lst))))
     (list-tail (reverse (helper left (sqrt left) 3 lst)) 1)))
 
+(define (prime-factors num)
+  (define (helper lst factor count acc)
+    (cond ((null? lst) (append acc (list (list factor count))))
+          ((= (car lst) factor) (helper (cdr lst) factor (+ count 1) acc))
+          (#t (helper (cdr lst) (car lst) 1 (append acc (list (list factor count)))))))
+  (let ((factor-list (factorization num)))
+    (helper (cdr factor-list) (car factor-list) 1 '())))
+
 (define (factors num)
   (filter (lambda (x) (= 0 (modulo num x))) (range 1 (+ num 1))))
