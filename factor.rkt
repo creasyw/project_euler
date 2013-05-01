@@ -1,6 +1,7 @@
 #lang racket
 
 (provide factorization)
+(provide factors)
 
 (define (factorization num)
   (define (extract-two n lst)
@@ -14,3 +15,6 @@
   (letrec ((lst (extract-two num '(1)))
            (left (/ num (foldl * 1 lst))))
     (list-tail (reverse (helper left (sqrt left) 3 lst)) 1)))
+
+(define (factors num)
+  (filter (lambda (x) (= 0 (modulo num x))) (range 1 (+ num 1))))
