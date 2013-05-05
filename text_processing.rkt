@@ -17,3 +17,15 @@
       (if (null? temp) (string->list acc)
           (helper (string-append acc (car temp))))))
   (helper ""))
+
+(define (stlist->numlist slst)
+  (if (null? slst) '()
+      (cons (- (char->integer (car slst)) (char->integer #\0)) (stlist->numlist (cdr slst)))))
+
+(define (keep-structure st)
+  (define (helper acc)
+    (let ((temp (st)))
+      (if (null? temp) acc
+          (helper (append acc (list (stlist->numlist (string->list (car temp)))))))))
+  (helper '()))
+      
