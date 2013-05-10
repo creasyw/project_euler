@@ -3,6 +3,10 @@
 (require "../text_processing.rkt")
 (require "../Q008/Q008.rkt")
 
+;; process the matrix
+(require htdp/matrix)
+
+
 (define (string->lst filename)
   (let ((st (next-row filename)))
     (define (process-string str acc)
@@ -28,6 +32,8 @@
                  (local (largest-product temp 4)))
           (if (> local result) (helper (cdr lst) local) (helper (cdr lst) result)))))
   (helper lstoflst 0))
+      
+      
 
 ;(define (largest-product filename sidelen)
 ;  (letrec ((lst (concatenate-number (next-row filename)))
