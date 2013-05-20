@@ -6,18 +6,6 @@
 ;; process the matrix
 (require htdp/matrix)
 
-
-(define (string->lst filename)
-  (let ((st (next-row filename)))
-    (define (process-string str acc)
-      (if (null? str) (reverse acc)
-          (process-string (cdr str) (cons (string->number (car str)) acc))))
-    (define (helper acc)
-      (let ((temp (st)))
-        (if (null? temp) acc
-            (helper (append acc (list (process-string (string-split (car temp)) '())))))))
-    (helper '())))
-
 (define (max-element lst)
   (define (helper itr result)
     (cond ((null? itr) result)
@@ -33,7 +21,7 @@
           (if (> local result) (helper (cdr lst) local) (helper (cdr lst) result)))))
   (helper lstoflst 0))
       
-      
+
 
 ;(define (largest-product filename sidelen)
 ;  (letrec ((lst (concatenate-number (next-row filename)))

@@ -3,6 +3,7 @@
 
 (provide next-row)
 (provide concatenate-number)
+(provide string->lst)
 
 (define (next-row filename)
   (make-csv-reader
@@ -29,3 +30,14 @@
           (helper (append acc (list (stlist->numlist (string->list (car temp)))))))))
   (helper '()))
       
+
+(define (string->lst filename)
+  (let ((st (next-row filename)))
+    (define (process-string str acc)
+      (if (null? str) (reverse acc)
+          (process-string (cdr str) (cons (string->number (car str)) acc))))
+    (define (helper acc)
+      (let ((temp (st)))
+        (if (null? temp) acc
+            (helper (append acc (list (process-string (string-split (car temp)) '())))))))
+    (helper '())))
