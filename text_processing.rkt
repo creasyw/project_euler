@@ -41,3 +41,4 @@
         (if (null? temp) acc
             (helper (append acc (list (process-string (string-split (car temp)) '())))))))
     (helper '())))
+
