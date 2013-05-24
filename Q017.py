@@ -71,7 +71,8 @@ def to_english(number):
         return output
 
 def cleanse_string(string):
-    '''remove spaces and hyphens'''
+    ''' just keep going
+    remove spaces and hyphens'''
     string = string.replace(' ', '')
     string = string.replace('-', '')
     return string
