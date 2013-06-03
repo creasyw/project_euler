@@ -1,5 +1,5 @@
 require 'set'
-load "../prime.rb"
+load "../primes.rb"
 
 limit = 500
 primes = gen_prime(Math.sqrt(limit).round)
