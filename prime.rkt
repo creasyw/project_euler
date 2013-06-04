@@ -1,6 +1,6 @@
 #lang racket
 (provide gen-prime)
-
+(provide prime?)
 
 (define (looping base lst)
   (define (helper count new_lst)
@@ -21,6 +21,11 @@
         (prime-range (for/list ((x (in-range 2 (+ 1 (integer-sqrt n))))) x)))
     (drop (filter (lambda (x) (not (= 0 x)))
                   (helper candidates prime-range)) 1)))
-                         
-                    
-    
+
+(define (prime? n)
+  (let ((root (integer-sqrt n)))
+    (define (helper i)
+      (cond ((> i root) #t)
+            ((= 0 (modulo n i)) #f)
+            (#t (helper (+ i 1)))))
+    (helper 2)))
