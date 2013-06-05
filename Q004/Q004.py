@@ -18,5 +18,10 @@ def main(upper, lower):
         if result < temp: result = temp
     print result
 
+
+def solution2():
+    print max(a*b for a in range(100,1000) for b in range(100, 1000) if str(a*b)==str(a*b)[::-1])
+
 if __name__ == "__main__":
-    main(999, 100)
+    #main(999, 100)
+    solution2()
