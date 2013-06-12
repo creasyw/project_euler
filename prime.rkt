@@ -22,6 +22,7 @@
     (drop (filter (lambda (x) (not (= 0 x)))
                   (helper candidates prime-range)) 1)))
 
+;; assuming the input n is larger than 1
 (define (prime? n)
   (let ((root (integer-sqrt n)))
     (define (helper i)
