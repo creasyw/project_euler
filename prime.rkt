@@ -29,4 +29,4 @@
       (cond ((> i root) #t)
             ((= 0 (modulo n i)) #f)
             (#t (helper (+ i 1)))))
-    (helper 2)))
+    (and (> n 1) (helper 2))))
