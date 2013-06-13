@@ -1,5 +1,7 @@
 #lang racket
 
+;; problem 36 has better idea check if a number is palindrome
+;; which is just convert num->list then check reverse(list)==list
 (define (check-palindrome num)
   (define (find-base n base)
     (if (= 0 (quotient n base))
