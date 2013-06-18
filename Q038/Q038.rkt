@@ -2,11 +2,8 @@
 
 ;; import num->intlist
 (require "../list.rkt")
-
-(define (pandigital? n)
-  (let ((nlist (range 1 10))
-        (target (sort (num->intlst n) <)))
-    (equal? target nlist)))
+;; import pandigital?
+(require "../number.rkt")
 
 (define (pan-multiples? n)
   ;; any number in condition will be regarded as true
