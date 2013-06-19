@@ -12,10 +12,14 @@
 (provide pythagorean?)
 (provide num-of-pythagorean)
 (provide pandigital?)
+(provide divisible?)
 
 (define (factorial n)
   (if (<= n 1) 1
       (foldl * 1 (range 2 (+ n 1)))))
+
+(define (divisible? a b)
+  (integer? (/ a b)))
 
 (define (decimal->binary num)
   (define (helper n acc)
