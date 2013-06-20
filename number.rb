@@ -1,3 +1,4 @@
+require_relative "./factor.rb"
 
 def is_pythagorean (premeter)
   half = premeter / 2
