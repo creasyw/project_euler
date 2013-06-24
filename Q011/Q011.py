@@ -2,12 +2,12 @@ import os
 import numpy as np
 
 def product_four(lst):
-    return [reduce(lambda x,y:x*y, lst[i:i+4]) for i in range(len(lst)-3)]
+    return max(reduce(lambda x,y:x*y, lst[i:i+4]) for i in range(len(lst)-3))
 
 def hproduct(array):
     result = 0
     for row in array:
-        result = max([result] + product_four(row))
+        result = max(result, product_four(row))
     return result
 
 def dproduct(array):
@@ -17,7 +17,7 @@ def dproduct(array):
     """
     result = 0
     for i in range(4, len(array)):
-        result = max([result] + product_four(array[:i, :i].diagonal())\
+        result = max(result,  product_four(array[:i, :i].diagonal())\
                      + product_four(array[-i:, :i].diagonal()))
     return result
 
