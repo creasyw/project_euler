@@ -24,6 +24,16 @@ module Matrix_extend
       Matrix[*arr]
     end
 
+    def Matrix.zeros(x, y)
+      # build matrix with all zeros
+      Matrix.build(x,y){|x,y| x=0}
+    end
+
+    def Matrix.ones(x, y)
+      # build matrix with all ones
+      Matrix.build(x,y){|x,y| x=1}
+    end
+
     #
     # Create a matrix by vertically merge two existing matrix
     #
