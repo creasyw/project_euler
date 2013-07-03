@@ -1,12 +1,12 @@
-m = File.read("Q018.txt").split("\n").map{|i| i.split(" ").map{|k| k.to_i}}
-m[1] = m[1].map{|i| i += m[0][0]}
-(1..m.length-2).each do |i|
-  m[i+1][0] += m[i][0]
-  (1..m[i].length-1).each do |j|
-    m[i+1][j] += [m[i][j-1], m[i][j]].max
+# although "flooding" is enough for this specific problem in both
+# algorithm complexity and performance, the better way is to reverse the
+# pyramid so that there is no twisted work for the first and last element
+m = File.read("Q018.txt").split("\n").map{|i| i.split(" ").map{|k| k.to_i}}.reverse
+(1..m.length-1).each do |i|
+  m[i].length.times do |j|
+    m[i][j] += [m[i-1][j], m[i-1][j+1]].max
   end
-  m[i+1][-1] += m[i].last
 end
 
-puts m[-1].max
+puts m[-1][0]
 
