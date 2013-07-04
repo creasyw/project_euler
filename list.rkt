@@ -7,6 +7,8 @@
 (provide rotate)
 (provide list-max)
 (provide list-min)
+(provide list-pos)
+(provide list-pickup)
 
 ;; returning the maximu or minimum element within the list
 (define (list-max lst)
@@ -106,3 +108,20 @@
                   (cons (last current) (take current (- limit 1)))
                   (cons current acc))))
     (helper 0 lst '())))
+
+;; return the index of elements satisfying the predicate
+(define (list-pos pred lst)
+  (filter (lambda (ref) (list-ref (map pred lst) ref))
+          (range (length lst))))
+
+;; return the sub-list whose indices are specified
+(define (list-pickup lst indices)
+  (define (helper rest acc)
+    (if (null? rest) (reverse acc)
+        (helper (cdr rest) (cons (list-ref lst (car rest)) acc))))
+  (letrec ((sorted (sort indices <)))
+    (if (or (null? sorted)
+            (< (first sorted) 0)
+            (> (last sorted) (- (length lst) 1)))
+        '()
+        (helper indices '()))))
