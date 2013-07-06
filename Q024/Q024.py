@@ -16,24 +16,34 @@
 
 import math
 
-target = 1000000
-result = 0
-count = 9	# the outerest round is x*10^9
-numList = []
 
-for i in range (0,count+1):
-	numList.append(i)
+# sol1 is faster than sol2 about latter's 50%
+def sol1():
+    target = 1000000
+    result = 0
+    count = 9	# the outerest round is x*10^9
+    numList = []
 
-leftValue = target-1
-while count>1 :
-	temp = math.factorial(count)
-	index = leftValue/temp
-	result += numList.pop(index)*math.pow(10,count)
-	leftValue = leftValue%temp
-	count = count-1
+    for i in range (0,count+1):
+        numList.append(i)
 
-result += numList.pop(leftValue)*10
-result += numList.pop(0)
+    leftValue = target-1
+    while count>1 :
+        temp = math.factorial(count)
+        index = leftValue/temp
+        result += numList.pop(index)*math.pow(10,count)
+        leftValue = leftValue%temp
+        count = count-1
 
-print "The %dth of the premutation is %d" % (target,result)
+    result += numList.pop(leftValue)*10
+    result += numList.pop(0)
+
+    print "The %dth of the premutation is %d" % (target,result)
+
+def sol2():
+    from itertools import permutations, islice
+    print ''.join(next(islice(permutations(map(str, range(10))), 999999, 1000000)))
+
+if __name__=="__main__":
+    sol2()
 
