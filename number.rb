@@ -7,3 +7,8 @@ def is_pythagorean (premeter)
     2*k.first*k.last, k.first**2+k.last**2]}
 end
 
+def factorial (st, en)
+  (st..en).reduce(:*)
+end
+
+
