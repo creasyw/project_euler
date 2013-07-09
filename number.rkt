@@ -2,6 +2,8 @@
 
 ;; import intlst->num
 ;; import num->intlst
+;; import list-pos
+;; import list-pickup
 (require "list.rkt")
 ;; import factors
 (require "factor.rkt")
@@ -13,6 +15,7 @@
 (provide num-of-pythagorean)
 (provide pandigital?)
 (provide divisible?)
+(provide arithmetic-sequence)
 
 (define (factorial n)
   (if (<= n 1) 1
@@ -87,3 +90,19 @@
   (letrec ((target (sort (num->intlst n) <))
            (nlist (range 1 (+ 1 (length target)))))
     (equal? target nlist)))
+
+;; Find consecutive longest arithmetic sequence in the given list
+;; if there is none, it returns false.
+;; Assuming the input list is sorted in ascending order.
+(define (arithmetic-sequence lst)
+  (define (helper rest result diff temp)
+    (if (null? (cdr rest)) (longer result (reverse temp))
+        (letrec ((new-diff (- (cadr rest) (car rest))))
+          (cond ((= diff new-diff)
+                 (helper (cdr rest) result diff (cons (cadr rest) temp)))
+                ((and (> (length temp) 1) (> (length temp) (length result)))
+                 (helper (cdr rest) (reverse temp) new-diff (reverse (take rest 2))))
+                (#t (helper (cdr rest) result new-diff (reverse (take rest 2))))))))
+  (if (> (length lst) 2)
+      (helper (cdr lst) '() (- (cadr lst) (car lst)) (reverse (take lst 2)))
+      lst))
