@@ -9,6 +9,10 @@
 (provide list-min)
 (provide list-pos)
 (provide list-pickup)
+(provide longer)
+(provide longest-sub-list)
+(provide delete-element)
+(provide delete-list)
 
 ;; returning the maximu or minimum element within the list
 (define (list-max lst)
@@ -125,3 +129,34 @@
             (> (last sorted) (- (length lst) 1)))
         '()
         (helper indices '()))))
+
+;; return the longer list
+(define (longer la lb)
+  (if (> (length la) (length lb)) la lb))
+
+;; delete certain element in a list and return the rest
+(define (delete-element lst element)
+  (letrec ((len (length lst)))
+    (define (helper lb ub)
+      (letrec ((ref (+ lb (quotient (- ub lb) 2)))
+               (probe (list-ref lst ref)))
+        (cond ((= element probe)
+               (append (take lst ref) (drop lst (+ ref 1)))) 
+              ((= ub lb) lst) ; cannot find
+              ((> element probe) (helper (+ ref 1) ub))
+              (#t (helper lb ref)))))
+    (helper 0 (- (length lst) 1))))
+
+;; delete elements of list b from list a
+(define (delete-list la lb)
+    (if (null? lb) la
+        (delete-list (delete-element la (car lb)) (cdr lb))))
+
+;; return the longest sub-list
+(define (longest-sub-list lst)
+  (define (helper rest result)
+    (cond ((null? rest) result)
+          ((> (length (car rest)) (length result))
+           (helper (cdr rest) (car rest)))
+          (#t (helper (cdr rest) result))))
+  (helper lst '()))
