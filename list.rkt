@@ -13,6 +13,7 @@
 (provide longest-sub-list)
 (provide delete-element)
 (provide delete-list)
+(provide occurence)
 
 ;; returning the maximu or minimum element within the list
 (define (list-max lst)
@@ -93,10 +94,6 @@
            (foldl append '() (list (list (map (lambda (x) (append x left-el)) acc)))))
           (#t (letrec ((tail (- left-pos 1))
                        (head (- (length left-el) tail)))
-                (displayln tail)
-                (displayln head)
-                (displayln left-pos)
-                (displayln left-el)
                 (map (lambda (x) (helper (rem-left x left-el) tail
                                          (map (lambda (y) (cons x y)) acc))) 
                      (take left-el head))))))
@@ -149,8 +146,8 @@
 
 ;; delete elements of list b from list a
 (define (delete-list la lb)
-    (if (null? lb) la
-        (delete-list (delete-element la (car lb)) (cdr lb))))
+  (if (null? lb) la
+      (delete-list (delete-element la (car lb)) (cdr lb))))
 
 ;; return the longest sub-list
 (define (longest-sub-list lst)
@@ -160,3 +157,14 @@
            (helper (cdr rest) (car rest)))
           (#t (helper (cdr rest) result))))
   (helper lst '()))
+
+;; return the occurence of each element listed decending order
+(define (occurence lst)
+  (letrec ((ht (make-hash)))
+    (for ((i lst))
+      (if (hash-has-key? ht i)
+          (hash-set! ht i (+ 1 (hash-ref ht i)))
+          (hash-set! ht i 1)))
+    (letrec ((hlst (hash->list ht)))
+      (sort hlst (lambda (x y) (> (cdr x) (cdr y)))))))
+
