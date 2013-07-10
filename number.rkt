@@ -11,15 +11,21 @@
 (provide factorial)
 (provide decimal->binary)
 (provide binary->decimal)
+(provide odd?)
 (provide pythagorean?)
 (provide num-of-pythagorean)
 (provide pandigital?)
+(provide palindromic?)
 (provide divisible?)
 (provide arithmetic-sequence)
+(provide reverse-number)
 
 (define (factorial n)
   (if (<= n 1) 1
       (foldl * 1 (range 2 (+ n 1)))))
+
+(define (odd? n)
+  (integer? (/ n 2)))
 
 (define (divisible? a b)
   (integer? (/ a b)))
@@ -106,3 +112,12 @@
   (if (> (length lst) 2)
       (helper (cdr lst) '() (- (cadr lst) (car lst)) (reverse (take lst 2)))
       lst))
+
+;; required in q055
+(define (palindromic? n)
+  (let ((lst (num->intlst n)))
+    (equal? lst (reverse lst))))
+
+;; return the number in reverse form
+(define (reverse-number n)
+  (intlst->num (reverse (num->intlst n))))
