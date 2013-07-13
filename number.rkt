@@ -17,6 +17,7 @@
 (provide pandigital?)
 (provide palindromic?)
 (provide divisible?)
+(provide cyclic?)
 (provide arithmetic-sequence)
 (provide reverse-number)
 
@@ -121,3 +122,9 @@
 ;; return the number in reverse form
 (define (reverse-number n)
   (intlst->num (reverse (num->intlst n))))
+
+;; determine if two numbers are cyclic
+(define (cyclic? a b ndigits)
+  (letrec ((alst (num->intlst a))
+           (blst (num->intlst b)))
+    (equal? (drop alst (- (length alst) ndigits)) (take blst ndigits))))
