@@ -10,14 +10,13 @@ count = 0
 generator = Prime.instance()	#ruby prime generator
 result = []
 for i in generator
-  if i < 10 then next end
-  if count == 11 then break end
+  if count == 15 then break end
   if truncate_prime(i)
     result << i
     count += 1
   end
 end
-
+result = result.last(11)
 puts result.join(" ")
 puts result.reduce(:+)
 
