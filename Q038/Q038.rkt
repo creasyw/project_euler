@@ -16,7 +16,9 @@
   (helper 1 '()))
 
 (define (main)
-  (let ((limit 10000000))
+  ;; for concatenating, the largest possible value for (1..n) and n>2
+  ;; is a four-digit number.
+  (let ((limit 9999))
     (define (helper count result)
       (let ((returned (pan-multiples? count)))
         (cond ((> count limit) result)
