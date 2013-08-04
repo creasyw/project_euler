@@ -5,8 +5,9 @@ def is_pandigit (n)
     result += (count*n).to_s
     count += 1
   end
-  if result.split("").sort.reduce(:+) == "123456789" then return result
-  else return 0
+  if result.split("").sort.reduce(:+) == "123456789"
+    then return result
+    else return 0
   end
 end
 
