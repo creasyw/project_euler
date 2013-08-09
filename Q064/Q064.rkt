@@ -1,14 +1,16 @@
 #lang racket
 
+(provide find-looper)
+
 ;; there is no need for function finding looping fragment
 ;; because the looping can be uniquely defined by the pair (p, q)
 ;; which define the loop formula (/ (- (sqrt n) p) q)
 (define (find-looper n)
-  (if (= (sqrt n) (integer-sqrt n)) 0
+  ;; '() is a dummy return to cope with the right target
+  (if (= (sqrt n) (integer-sqrt n)) '()
       (letrec ((sq (sqrt n)))
         (define (helper p q acc)
-          (if (member (list p q) acc)
-              (- (length acc) 1)
+          (if (member (list p q) acc) (drop acc 1)
               (letrec ((temp (floor (/ (* q (+ sq p)) (- n (* p p)))))
                        (qp (/ (- n (* p p)) q))
                        (pp (- (* qp temp) p)))
@@ -20,6 +22,7 @@
 (define (q064 limit)
   (foldl + 0
          (for/list ((i (in-range 2 (+ limit 1))))
-           (if (odd? (find-looper i)) 1 0))))
+           (if (odd? (length (find-looper i))) 1 0))))
 
-(q064 10000)
+;; testing
+;(q064 10000)
