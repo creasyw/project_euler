@@ -16,10 +16,14 @@
 (provide occurence)
 
 ;; returning the maximu or minimum element within the list
+;(define (list-max lst)
+;  (foldl (lambda (x y) (max x y)) -inf.0 lst))
+;(define (list-min lst)
+;  (foldl (lambda (x y) (min x y)) +inf.0 lst))
 (define (list-max lst)
-  (foldl (lambda (x y) (max x y)) -inf.0 lst))
+  (argmax (lambda (x) x) lst))
 (define (list-min lst)
-  (foldl (lambda (x y) (min x y)) +inf.0 lst))
+  (argmin (lambda (x) x) lst))
 
 ;; returns a list of integers containing every digit of the "num"
 (define (num->intlst-old num)
