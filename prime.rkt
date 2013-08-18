@@ -12,17 +12,17 @@
 
 ;; generate all prime numbers smaller than n
 ;; n should be positive and larger than one
-(define (gen-prime n)
+(define (new-prime n)
   (define (helper target ref)
     (cond ((null? ref) target)
-          ((= 0 (list-ref target (car ref))) (helper target (cdr ref)))
+          ((= 0 (list-ref target (- (car ref) 2))) (helper target (cdr ref)))
           (#t (helper (map (lambda (index) 
                              (if (and (not (= index (car ref))) (= 0 (modulo index (car ref)))) 0 index)) target) 
                       (cdr ref)))))
-  (let ((candidates (for/list ((x (in-range n))) x))
-        (prime-range (for/list ((x (in-range 2 (+ 1 (integer-sqrt n))))) x)))
-    (drop (filter (lambda (x) (not (= 0 x)))
-                  (helper candidates prime-range)) 1)))
+  (let ((candidates (range 2 n))
+        (prime-range (range 2 (+ 1 (integer-sqrt n)))))
+    (filter (lambda (x) (not (= 0 x)))
+                  (helper candidates prime-range))))
 
 ;; determine if a number is prime
 ;; n should be positive and larger than one
@@ -33,3 +33,7 @@
             ((= 0 (modulo n i)) #f)
             (#t (helper (+ i 1)))))
     (and (> n 1) (helper 2))))
+
+;; find all numbers coprime and smaller than n
+;(define (coprime n)
+;  (letrec ((candidates 
