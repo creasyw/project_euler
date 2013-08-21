@@ -80,9 +80,12 @@
 ;; given premeter can be simplified as finding coprime pairs within the factors of
 ;; that premeter, which is the 2nd condition in the pattern matching.
 (define (num-of-pythagorean n)
+  (length (candidates-of-pythagorean n)))
+
+(define (candidates-of-pythagorean n)
   (let ((lst (drop (factors n) 1)))
     (define (loop itr acc)
-      (cond ((null? itr) (length acc))
+      (cond ((null? itr) acc)
             ((pythagorean? (car itr))
              (loop (filter (lambda (x) (not (integer? (/ (log (/ x (car itr)))
                                                          (log 2)))))
