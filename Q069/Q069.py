@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 from operator import mul
+
+import sys
+sys.path.append("../")
 from factor import factorize
 
 def totient(n):
