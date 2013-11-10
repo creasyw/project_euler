@@ -20,10 +20,9 @@
 ;  (foldl (lambda (x y) (max x y)) -inf.0 lst))
 ;(define (list-min lst)
 ;  (foldl (lambda (x y) (min x y)) +inf.0 lst))
-(define (list-max lst)
-  (argmax (lambda (x) x) lst))
-(define (list-min lst)
-  (argmin (lambda (x) x) lst))
+
+(define (list-max lst) (apply max lst))
+(define (list-min lst) (apply min lst))
 
 ;; returns a list of integers containing every digit of the "num"
 (define (num->intlst-old num)
