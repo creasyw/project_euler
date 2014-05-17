@@ -21,8 +21,6 @@ def fib_matrix(n):
         times /= 2
     return y(x)[0,0]
 
-
-
 # calculate the nth Fibonacci number via Dynamic Programming
 def fib(n):
     a = 0
