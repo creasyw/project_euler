@@ -6,7 +6,7 @@
 fib :: (Integral a) => a -> a
 fib 1 = 1
 fib 2 = 2
-fib x = fib (x-1) + fib (x - 2)
+fib x = fib (x - 1) + fib (x - 2)
 
 -- this is cool - generating an infinite list
 fibs' :: (Num a) => [a]
