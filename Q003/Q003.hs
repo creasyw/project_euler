@@ -30,10 +30,16 @@ p1 = 2 : 3 : primes'
     isPrime (p : ps) n = p * p > n || n `rem` p /= 0 && isPrime ps n
     primes' = 5 : filter (isPrime primes') [7, 9 ..]
 
+-- it likes a fucking rabbit hole..
+-- https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+-- https://en.wikipedia.org/wiki/Generation_of_primes
+-- Its time complexity for finding all primes below N in a RAM model is
+-- O(NloglogN)
 p2 :: (Integral a) => [a]
 p2 = 2 : 3 : 5 : primes'
   where
     isPrime (p : ps) n = p * p > n || n `rem` p /= 0 && isPrime ps n
     primes' = 7 : filter
         (isPrime primes')
+        -- the wheel of the sieve is [11,13,17,19,23,29,31,37,41]
         (scanl (+) 11 $ cycle [2, 4, 2, 4, 6, 2, 6, 4])
