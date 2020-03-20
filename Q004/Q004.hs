@@ -3,7 +3,7 @@
 -- than the actual "math" way to comapre the number digit by digit, especially
 -- for large number
 isPalindrome :: (Integral a, Show a) => a -> Bool
-isPalindrome x = (show x) == (reverse (show x))
+isPalindrome x = str == reverse str where str = show x
 
 -- I guess there is some smart way to find the numbers in a list that their
 -- products are in decreasing order. But the complexity for all three digits
