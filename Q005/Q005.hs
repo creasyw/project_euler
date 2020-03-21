@@ -1,6 +1,6 @@
-import           Data.List           as List
-import           Data.Map.Strict     as Map
-import           Data.Numbers.Primes as Primes
+import           Data.List                     as List
+import           Data.Map.Strict               as Map
+import           Data.Numbers.Primes           as Primes
 
 -- The general thought is different from (and probably sub-optimal to) the
 -- Python/Racket algorithm. Basically, it counts the number of prime factors in
