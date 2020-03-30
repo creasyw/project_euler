@@ -1,4 +1,5 @@
 import os
+from functools import reduce
 import numpy as np
 
 def product_four(lst):
@@ -11,7 +12,7 @@ def hproduct(array):
     return result
 
 def dproduct(array):
-    """ 
+    """
     this function only find the four consecutive number from upper left to lower right.
     If the other diagonal direction is the target, just rotate the array will be fine.
     """
@@ -32,9 +33,7 @@ def main():
         for row in datafile:
             array[ln] = [int(k) for k in row.split(' ')]
             ln += 1
-    print largest_product(array)
+    print(largest_product(array))
 
 if __name__ == "__main__":
     main()
-
-
