@@ -17,3 +17,15 @@ factor2 n = sort $ concatMap (\x -> if x^2/=n then [x, n `div` x] else [x])
 
 
 primeFactor n = filter isPrime (factor n)
+
+
+-- Used this at Q012. It use recursive function to get rid of sqrt...
+factorize :: Integral a => a -> [a]
+factorize x = findFactors 1 x []
+  where findFactors a b lst =
+          if a >= b then lst else
+            if x `mod` a == 0 then
+              let another = x `div` a in
+                if another == a then findFactors (a+1) another ([a] ++ lst)
+                else findFactors (a+1) another ([a, another] ++ lst)
+            else findFactors (a+1) b lst
