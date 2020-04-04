@@ -1,32 +1,30 @@
-from collections import defaultdict
+# hey dp, miss you much :)
+# for every chain reaction, we actually also find all answers for the number within the chain - it
+# is the typical puzzle for Dynmaic Programming. In the implementation, there is actually no need
+# for a map. A list is enough - using index to represent the number and the value in the list to
+# represent the length of the chain. To further optimize it, we can remember the max value and its
+# position (the number) while iterating through the list.
 
-def count_length(num, dict):
-    count = 1
-    acc = num
-    while acc != 1:
-        if acc%2==0:
-            acc /= 2
+def collatz(limit):
+    def find_length(register, num, acc):
+        if num < limit and register[num] != 0:
+            for index, val in enumerate(acc[::-1]):
+                if val > limit:
+                    continue
+                register[val] = register[num] + 1 + index
+            return
+        acc.append(num)
+        if num % 2 == 0:
+            return find_length(register, num // 2, acc)
         else:
-            acc = acc*3+1
-        count += 1
-        if acc in dict:
-            dict[num] = count + dict[acc]
-            return dict[num]
-    dict[num] = count
-    return count
+            return find_length(register, 3 * num + 1, acc)
 
-def main():
-    limit = 1000000
-    result = largest = 0
-    dict = defaultdict()
-    for i in range(2, limit):
-        temp = count_length(i, dict)
-        if (temp > largest):
-            result = i
-            largest = temp
-    print result
+    register = [0] * (limit + 1)
+    register[1] = 1
 
-if __name__=="__main__":
-    main()
+    for num in range(2, len(register)):
+        if register[num] != 0:
+            continue
+        find_length(register, num, [])
 
-
+    return register.index(max(register))
