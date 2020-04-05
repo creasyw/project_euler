@@ -17,13 +17,19 @@
 
 import Data.Map.Strict as Map
 
-findLength register num acc =
-  if member num register then
-    Map.union register $ Map.fromList $ zip acc [val..(length acc)+val]
-  else
-    findLength register (next num) (num : acc)
-  where val = register ! num + 1
-        next x = if x `mod` 2 == 0 then x `div` 2 else 3 * x + 1
+findLength register num acc = if member num register
+    then Map.union register $ Map.fromList $ zip acc [val .. (length acc) + val]
+    else findLength register (next num) (num : acc)
+  where
+    val = register ! num + 1
+    next x = if x `mod` 2 == 0 then x `div` 2 else 3 * x + 1
 
-collatz x = Map.foldlWithKey (\(ak, av) key val -> if val > av then (key, val) else (ak, av)) (1, 1) register
-  where register = Prelude.foldl (\acc num -> findLength acc num []) (Map.fromList [(1, 1)]) [2..x]
+collatz x = Map.foldlWithKey
+    (\(ak, av) key val -> if val > av then (key, val) else (ak, av))
+    (1, 1)
+    register
+  where
+    register = Prelude.foldl
+        (\acc num -> findLength acc num [])
+        (Map.fromList [(1, 1)])
+        [2 .. x]
