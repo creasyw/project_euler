@@ -29,3 +29,24 @@ factorize x = findFactors 1 x []
                 if another == a then findFactors (a+1) another ([a] ++ lst)
                 else findFactors (a+1) another ([a, another] ++ lst)
             else findFactors (a+1) b lst
+
+-- Deal with multiplication of accumulated large numbers
+-- Note that both the strNum and the resulting string are backward
+-- It has been used in Q016 and Q020
+largeMultiply strNum base = helper strNum 0 ""
+  where
+    helper a carry acc = case a of
+        -- since the entire result is backward, we have to reverse the carry if
+        -- it has more than one digit
+        [] -> if carry == 0 then acc else acc ++ (reverse (show carry))
+        -- this is a trick to convert a char to a string
+        (x : xs) ->
+            let num = (read (x : [])) * base + carry
+            in helper xs (num `div` 10) (acc ++ (show (num `mod` 10)))
+
+-- Derive teh factorial of numbers that are larger than 2. So, we use the
+-- largeMultiply function above.
+factorial x = helper "1" [2..x]
+  where helper strNum lst = case lst of
+          [] -> reverse strNum
+          (x:xs) -> helper (largeMultiply strNum x) xs
