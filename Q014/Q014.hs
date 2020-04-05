@@ -13,6 +13,9 @@
 -- in this question is to disassemble and assemble them in the anonymous
 -- function to find the pair with max value.
 -- 4. I love =where=.
+-- 5. The difference between this and its pyhton counterpart is that I don't use
+-- a fix-length list here, so we don't need to check the boundary. The downside
+-- is that it consumes more memory
 -- mic drop
 
 import Data.Map.Strict as Map
