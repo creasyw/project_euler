@@ -33,3 +33,14 @@ sumOfAbundant limit = Set.foldl' (\acc i -> if i < limit then acc + i else acc) 
 
 -- *** Exception: stack overflow
 sumOfNonAbundant1 limit = (sum [1..limit]) - (sumOfAbundant limit)
+
+
+sumOfNonAbundant limit = foldl (\acc i -> if (isNonAbundunt i (filter isAbundant [12..limit])) then acc + i else acc) 0 [1..limit]
+
+isNonAbundunt x lstAbundant = helper lstAbundant
+  where helper i  = if (header) > (x / 2)
+                    then True
+                    else if (x - header) `elem` lstAbundant
+                         then False
+                         else helper i
+          where header = head i
