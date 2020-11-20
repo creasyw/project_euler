@@ -10,27 +10,42 @@ matrixProcess s = show
   $ Matrix.fromList 20 20
   $ map (\x -> read x::Int) $ words s
 
-iterateMatrix m = helper 1 m 0
-  where helper startRow cm acc =
-          if (Matrix.nrows cm == 1 && Matrix.ncols cm == 1)
-          then max acc $ Matrix.getElem 1 1 cm
-          else if Matrix.ncols cm == 1
-               then helper (startRow + 1) (Matrix.submatrix (startRow + 1) (Matrix.nrows m) 1 (Matrix.ncols m) m) $ max (maxValue cm) acc
-               else helper startRow (Matrix.submatrix 1 (Matrix.nrows cm) 2 (Matrix.ncols cm) cm) $ max (maxValue cm) acc
--- get the maximum value among diagnal, first row, and first column
-maxValue m =
-  max (helper $ Matrix.getRow 1) $
-  max (helper $ Matrix.getCol 1) (helper Matrix.getDiag)
-  where helper f = List.maximum $ productOfFour $ Vector.toList $ f m
+iterateMatrix m = List.maximum
+  [maxRow m, maxDiag m, maxRow (Matrix.transpose m), maxDiag (Matrix.transpose m),
+   maxDiag mm, maxDiag (Matrix.transpose mm)]
+  where mm = matrixMirror m
 
--- only check the maximum value in the diagnal direction
-maxDiag m = List.maximum $ productOfFour $ Vector.toList $ Matrix.getDiag m
+-- get the maximum value of all rows in the given matrix
+-- Note that we can do transpose to the matrix and apply this function again to get the value for all columns
+maxRow m = helper 1 (Matrix.nrows m) 0
+  where helper currentRow rowNum acc =
+          if currentRow == rowNum
+          then max acc $ maxValue $ Matrix.getRow currentRow m
+          else helper (currentRow + 1) rowNum $ max acc $ maxValue $ Matrix.getRow currentRow m
 
+-- get the maximum value of the lower half of all diagonal vectors of a given matrix
+-- It needs a transpose to search through the other half of the diagnals
+-- It looks very similar to maxRow. The reason to keep them separate is we need
+-- to do a mirror matrix and apply another round of diagnal twice for the uppoer
+-- and lower half of the mirrored matrix. This function is required after all.
+-- As a result, it's clearer to keep the maxRow to also perform a single task
+maxDiag m = helper 1 (Matrix.nrows m) m 0
+  where helper currentRow rowNum cm acc =
+          if currentRow == rowNum
+          then max acc $ maxValue $ Matrix.getDiag cm
+          else helper (currentRow + 1) rowNum
+               (Matrix.submatrix (currentRow + 1) (Matrix.nrows m) 1 (Matrix.ncols m) m)
+               $ max acc $ maxValue $ Matrix.getDiag cm
+
+-- flip the matrix so that we could get the diagnal vecter in the opposite direction
 matrixMirror m = helper 1 (Matrix.ncols m) m
   where helper c1 c2 cm =
           if c1 >= c2
           then cm
           else helper (c1 + 1) (c2 - 1) $ Matrix.switchCols c1 c2 cm
+
+-- get the maximum of a veter with the largest product for the adjacent four elements
+maxValue v = List.maximum $ productOfFour $ Vector.toList v
 
 -- get the product of every four elements
 productOfFour lst =
