@@ -22,13 +22,13 @@ primeFactor n = filter isPrime (factor n)
 -- Used this at Q012. It use recursive function to get rid of sqrt...
 factorize :: Integral a => a -> [a]
 factorize x = findFactors 1 x []
-  where findFactors a b lst =
-          if a >= b then lst else
-            if x `mod` a == 0 then
-              let another = x `div` a in
-                if another == a then findFactors (a+1) another ([a] ++ lst)
-                else findFactors (a+1) another ([a, another] ++ lst)
-            else findFactors (a+1) b lst
+  where findFactors a b lst
+          | a >= b = lst
+          | x `mod` a == 0 =
+          let another = x `div` a in
+            if another == a then findFactors (a+1) another ([a] ++ lst)
+            else findFactors (a+1) another ([a, another] ++ lst)
+          | otherwise = findFactors (a+1) b lst
 
 -- Deal with multiplication of accumulated large numbers
 -- Note that both the strNum and the resulting string are backward
@@ -38,11 +38,11 @@ largeMultiply strNum base = helper strNum 0 ""
     helper a carry acc = case a of
         -- since the entire result is backward, we have to reverse the carry if
         -- it has more than one digit
-        [] -> if carry == 0 then acc else acc ++ (reverse (show carry))
+        [] -> if carry == 0 then acc else acc ++ reverse (show carry)
         -- this is a trick to convert a char to a string
         (x : xs) ->
-            let num = (read (x : [])) * base + carry
-            in helper xs (num `div` 10) (acc ++ (show (num `mod` 10)))
+            let num = read (x : []) * base + carry
+            in helper xs (num `div` 10) (acc ++ show (num `mod` 10))
 
 -- Derive teh factorial of numbers that are larger than 2. So, we use the
 -- largeMultiply function above.
