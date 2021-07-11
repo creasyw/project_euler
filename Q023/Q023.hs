@@ -12,33 +12,14 @@ factor n = List.sort $ concatMap
 
 isAbundant n = n < sum (init $ factor n)
 
-sumOfTwo lst = helper lst lst Set.empty
-  where helper a b acc
-          | null b = acc
-          | otherwise = helper a (tail b) (innerLoop (head b) a acc)
-          where innerLoop c d accLst
-                  | null d = accLst
-                  | otherwise = innerLoop c (tail d) (Set.insert (c + head d) accLst)
+sumOfNonAbundant limit = sum $ filter (notSumOfAbundunts setAbundants lstAbundants) [1..limit]
+  where
+    lstAbundants = filter isAbundant [12..limit]
+    setAbundants = Set.fromList lstAbundants
 
-sumOfUniqueTwo lst acc
-  | null lst = acc
-  | otherwise = sumOfUniqueTwo (tail lst) (innerLoop (head lst) (tail lst) acc)
-  where innerLoop c d accLst
-          | null d = accLst
-          | otherwise = innerLoop c (tail d) (Set.insert (c + head d) accLst)
-
-sumOfAbundant limit = Set.foldl' (\acc i -> if i < limit then acc + i else acc) 0 (sumOfTwo (filter isAbundant [12..limit]))
-
--- *** Exception: stack overflow
-sumOfNonAbundant1 limit = sum [1..limit] - sumOfAbundant limit
-
-
-sumOfNonAbundant limit = foldl (\acc i -> if isNonAbundunt i (filter isAbundant [12..limit]) then acc + i else acc) 0 [1..limit]
-
-isNonAbundunt x lstAbundant = helper lstAbundant
-  where helper i
-          | (header) > (x / 2) = True
-          | (x - header) `elem` lstAbundant = False
-          | otherwise = helper i
-          where
-              header = head i
+notSumOfAbundunts :: (Ord t, Integral t) => Set.Set t -> [t] -> t -> Bool
+notSumOfAbundunts setAbundants lstAbundants num
+  | headA > div num 2 = True
+  | Set.member (num - headA) setAbundants = False
+  | otherwise = notSumOfAbundunts setAbundants (tail lstAbundants) num
+  where headA = head lstAbundants
