@@ -34,4 +34,4 @@ while 1:
         fn2 = fn1
         fn1 = fn
 
-print "There should be %d round." % count
+print("There should be {} round.".format(count))
