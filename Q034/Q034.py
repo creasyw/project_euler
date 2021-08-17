@@ -20,9 +20,8 @@ def main():
         if is_curious(i):
             result.append(i)
             sum += i
-    print result
-    print sum
+    print(result)
+    print(sum)
 
 if __name__=="__main__":
     main()
-
