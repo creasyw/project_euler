@@ -50,3 +50,7 @@ factorial x = helper "1" [2..x]
   where helper strNum lst = case lst of
           [] -> reverse strNum
           (x:xs) -> helper (largeMultiply strNum x) xs
+
+-- Slice a given list
+slice :: Int -> Int -> [a] -> [a]
+slice from to xs = take (to - from + 1) (drop from xs)
