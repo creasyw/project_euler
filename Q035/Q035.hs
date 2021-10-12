@@ -5,6 +5,8 @@ circularPrime :: Int -> Bool
 circularPrime x = let strNum = show x
                 in helper 1 strNum [x]
 
+-- early exit is more efficient than generating the entire list and filtering
+-- afterwards.
 helper :: Int -> String -> [Int] -> Bool
 helper index strNum acc =
   if index >= length strNum
